@@ -11,7 +11,7 @@ import socket
 import sys
 
 host = 'localhost'
-port = 50000
+port = 55555
 size = 1024
 
 nargs = len(sys.argv)
@@ -20,14 +20,14 @@ if nargs > 1:
 if nargs > 2:
     port = int(sys.argv[2])
 
-greeting = 'Hello, World'
-new_greeting = raw_input("> ")
-if new_greeting:
-    greeting = new_greeting
-s = socket.socket(socket.AF_INET, 
-                  socket.SOCK_STREAM)
-s.connect((host,port))
-s.send(greeting)
-data = s.recv(size)
-s.close()
-print 'from (%s,%s) %s' % (host, port, data)
+while True:
+    greeting = raw_input("> ")
+    if not greeting:
+        break
+    s = socket.socket(socket.AF_INET, 
+                      socket.SOCK_STREAM)
+    s.connect((host,port))
+    s.send(greeting)
+    data = s.recv(size)
+    s.close()
+    print 'from (%s,%s) %s' % (host, port, data)
