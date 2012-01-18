@@ -1,10 +1,13 @@
 """
-echo client, usage:
+recho client, usage:
 
- python echo_client.py <host> <port>
+ python recho_client.py <host> <port>
 
 Both host and port are optional, defaults: localhost 50000
 host must be present if you want to provide port
+
+Prompt user for each message to send
+Repeat seding messages until user enters empty string
 """
 
 import socket
@@ -20,14 +23,17 @@ if nargs > 1:
 if nargs > 2:
     port = int(sys.argv[2])
 
+s = socket.socket(socket.AF_INET, 
+                  socket.SOCK_STREAM)
+s.connect((host,port))
+print 'Connection accepted by (%s,%s)' % (host, port)
 while True:
-    greeting = raw_input("> ")
-    if not greeting:
+    message = raw_input("> ")
+    if message:
+        s.send(message)
+        data = s.recv(size)
+        print data
+    else:
+        s.close()
         break
-    s = socket.socket(socket.AF_INET, 
-                      socket.SOCK_STREAM)
-    s.connect((host,port))
-    s.send(greeting)
-    data = s.recv(size)
-    s.close()
-    print 'from (%s,%s) %s' % (host, port, data)
+
