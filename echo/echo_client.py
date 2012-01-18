@@ -20,13 +20,15 @@ if nargs > 1:
 if nargs > 2:
     port = int(sys.argv[2])
 
-greeting = 'Hello, World'
-new_greeting = raw_input("> ")
-if new_greeting:
-    greeting = new_greeting
 s = socket.socket(socket.AF_INET, 
                   socket.SOCK_STREAM)
 s.connect((host,port))
+
+greeting = 'Hello, World'
+new_greeting = raw_input('> ')
+if new_greeting:
+    greeting = new_greeting
+
 s.send(greeting)
 data = s.recv(size)
 s.close()
