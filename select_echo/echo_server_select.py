@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 Based on Daniel Zappala's http://ilab.cs.byu.edu/python/code/echoserver-select.py
 Add print statements to show what's going on.
@@ -15,7 +16,7 @@ import sys
 import time
 import datetime
 
-# No host indicates localhost?????????????????????
+# No host indicates localhost
 host = ''
 port = 50003
 
@@ -34,7 +35,7 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # avoid socket.error: [Errno 48] Address already in use
 # the level - SOL_SOCKET - sets connection at socket level
 # the option - SO_REUSEADDR allows reuse of the local address
-# the value - 1 indicates enabling of the option?????????????????????
+# the value - 1 indicates enabling of the option?
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server.bind((host,port))
@@ -48,7 +49,10 @@ output = []
 message_dict = {}
 running = True
 while running:
-    inputready,outputready,exceptready = select.select(input, output,[],timeout)
+    inputready,outputready,exceptready = select.select(input, [],[],timeout)
+
+    if not inputready:
+        print 'Server running at %s' datetime.datetime.now()
 
     for s in inputready:
 
@@ -73,16 +77,16 @@ while running:
                 message = '(spedl_server) %s: %s\n' % (s.getpeername(),
                         data.strip('\n'))
                 for o in output:
-                    message_dict[o].append(message)
+                    o.send(message);
             else:
                 s.close()
                 print 'closed connection'
                 input.remove(s)
                 output.remove(s)
 
-    for s in outputready:
-        messages = message_dict[s]
-        for i in range(len(messages)):
-            s.send(messages.pop())
+    #for s in outputready:
+    #    messages = message_dict[s]
+    #    for i in range(len(messages)):
+    #        s.send(messages.pop())
 
 s.close()

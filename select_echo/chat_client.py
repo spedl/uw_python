@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 recho client, usage:
 
@@ -7,7 +8,7 @@ Both host and port are optional, defaults: localhost 50000
 host must be present if you want to provide port
 
 Prompt user for each message to send
-Repeat seding messages until user enters empty string
+Repeat sending messages until user enters empty string
 """
 
 import socket
@@ -41,7 +42,6 @@ while running:
         if connection == sys.stdin:
             message = sys.stdin.readline()
             if message and len(message) > 1:
-                print message
                 my_socket.send(message)
                 data = my_socket.recv(size)
                 print data
