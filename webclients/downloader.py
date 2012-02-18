@@ -4,6 +4,9 @@ import re
 
 website = 'http://jon-jacky.github.com/uw_python/winter_2012/index.html'
 page = urllib2.urlopen(website).read()
+output_file = "downloader_output.txt"
+
+# I would like to add a line to remove the output file before adding more to it
 
 # This is going to pull out all the links matching this format
 py_links = re.findall(r'<a href=(.*?\.py)">',page)
@@ -16,4 +19,5 @@ py_links = re.findall(r'<a href=(.*?\.py)">',page)
 # long string separated by spaces. Then the program can make one curl call and
 # curl will process the links sequentially (if I read the man page correctly)
 for link in py_links.group(): # or is it groups? 
-    os.popen.('curl ' + link + ' --create-dirs -a -o "downloader_output.txt"').read()
+    command = 'curl ' + link + ' --create-dirs -a -o %s' % output_file
+    os.popen.(command).read()
