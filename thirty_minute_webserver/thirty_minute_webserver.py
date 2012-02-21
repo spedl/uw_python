@@ -142,7 +142,7 @@ def get_content(uri):
     300 along with the uri, indicating that the resource is missing.
 
     -- If it is not found, a 404 error is returned along with the uri.
-    Indicating that        
+    Indicating that the file could not be found
 
     -- If an IOError is thrown it is returns with a 404.
     '''
