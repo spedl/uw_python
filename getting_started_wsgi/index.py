@@ -1,5 +1,6 @@
 import re
 from cgi import escape
+from exception_middleware import ExceptionMiddleware
 
 def index(environ, start_response):
     '''This function will be mounted on "/" and display a link to the hello
@@ -54,5 +55,6 @@ def application(environ, start_response):
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
+    application = ExceptionMiddleware(application)
     srv = make_server('localhost', 8080, application)
     srv.serve_forever()
