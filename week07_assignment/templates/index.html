@@ -1,0 +1,12 @@
+<!--  This template is really just a static HTML page -->
+<title>Index of Books</title>
+<body>
+  {% if titles %}
+  <ul>
+  {% for title in titles %}
+  <li> <a href="/books.py">{{ title }}</a> </li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+</body>
+</html>
