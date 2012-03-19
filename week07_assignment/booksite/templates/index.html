@@ -1,0 +1,12 @@
+<title>Index of titles</title>
+<body>
+  {% if titles %}
+  <ul>
+  {% for title in titles %}
+  <li> <a href="/book_details/{{title['id'] }}">{{ title['title'] }}</a> </li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+</body>
+</html>
+
